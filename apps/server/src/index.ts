@@ -1,5 +1,3 @@
-import next from 'next';
-import path from 'path';
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -9,22 +7,12 @@ import { randomUUID } from 'crypto';
 import { QUESTION_BANK } from './questions';
 
 dotenv.config();
-const dev = process.env.NODE_ENV !== 'production';
-
-const nextApp = next({
-  dev,
-  dir: path.join(process.cwd(), 'apps/web')
-});
-
-const handle = nextApp.getRequestHandler();
 
 const PORT = Number(process.env.PORT || 4000);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-nextApp.prepare().then(() => {
 
 const server = http.createServer(app);
 
@@ -470,10 +458,6 @@ socket.on('get_rooms', () => {
   io.emit('rooms_list', list);
 });
 });
-app.all('*', (req, res) => {
-  return handle(req, res);
-});
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-});
 });
