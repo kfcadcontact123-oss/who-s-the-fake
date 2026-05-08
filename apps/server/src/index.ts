@@ -88,6 +88,22 @@ function emitRoom(room: Room) {
     roundCounter
   });
 }
+function emitRoomsList() {
+  const list = Array.from(rooms.values())
+    .filter(r =>
+      !r.isPrivate &&
+      r.players.some(p => p.socketId)
+    )
+    .map(r => ({
+      code: r.code,
+      name: r.name,
+      players: r.players.filter(p => p.socketId).length,
+      hostId: r.hostId,
+      phase: r.phase
+    }));
+
+  io.emit('rooms_list', list);
+}
 
 function assignRoles(players: Player[]): Record<string, Role> {
   const total = players.length;
@@ -183,6 +199,7 @@ socket.join(roomCode);
 cb?.({ ok: true, player });
 
 emitRoom(room);
+emitRoomsList();
   });
   // ===== LEAVE ROOM =====
 socket.on('leave_room', ({ roomCode }, cb) => {
@@ -200,6 +217,7 @@ socket.on('leave_room', ({ roomCode }, cb) => {
   });
 
   emitRoom(room);
+  emitRoomsList();
   cb?.({ ok: true }); 
 
   console.log(`${player.name} left room ${roomCode}`);
@@ -445,17 +463,7 @@ socket.on('typing', ({ roomCode, isTyping }) => {
   });
 });
 socket.on('get_rooms', () => {
-  const list = Array.from(rooms.values())
-  .filter(r => !r.isPrivate && r.players.some(p => p.socketId))
-  .map(r => ({
-    code: r.code,
-    name: r.name,
-    players: r.players.filter(p => p.socketId).length,
-    hostId: r.hostId,
-    phase: r.phase
-  }));
-
-  io.emit('rooms_list', list);
+  emitRoomsList();
 });
 });
 server.listen(PORT, () => {
