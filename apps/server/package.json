@@ -10,9 +10,6 @@
     "cors": "^2",
     "dotenv": "^16",
     "express": "^4",
-    "next": "^15",
-    "react": "^19",
-    "react-dom": "^19",
     "socket.io": "^4"
   },
   "devDependencies": {
