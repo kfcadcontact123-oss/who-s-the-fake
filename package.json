@@ -1,0 +1,12 @@
+{
+  "name": "guess-imposter",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+    "scripts": {
+    "dev:web": "npm --workspace apps/web run dev",
+    "dev:server": "npm --workspace apps/server run dev",
+    "build:web": "npm --workspace apps/web run build",
+
+    "start": "npm --workspace apps/server start"
+  }
+}

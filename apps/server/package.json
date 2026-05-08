@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2",
+    "cors": "^2",
+    "dotenv": "^16",
+    "express": "^4",
+    "next": "^15",
+    "react": "^19",
+    "react-dom": "^19",
+    "socket.io": "^4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
